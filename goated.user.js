@@ -8,6 +8,7 @@
 // @include       /^https?:\/\/[^/]*goated[^/]*\/.*$/
 // @run-at       document-idle
 // @copyright    2025, FvckinBot (https://openuserjs.org/users/FvckinBot)
+// @license CC-BY-NC-SA-4.0; https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/User Script==
 
