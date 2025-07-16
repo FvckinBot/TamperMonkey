@@ -6,9 +6,10 @@
 // @author       YourName
 // @match        *://*/*
 // @grant        GM_addStyle
-// @license      MIT
+// ==UserLibrary==
+// @license MIT
 // ==/UserScript==
-
+// ==/UserLibrary==
 (function() {
     'use strict';
 
