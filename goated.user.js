@@ -7,6 +7,7 @@
 // @match        *://*/*
 // @grant        GM_addStyle
 // @copyright    2025, FvckinBot (https://openuserjs.org/users/FvckinBot)
+// @license      GPL-2.0-only
 // ==/UserScript==
 (function() {
     'use strict';
