@@ -7,7 +7,8 @@
 // @match        *://*/*
 // @grant        GM_addStyle
 // @copyright    2025, FvckinBot (https://openuserjs.org/users/FvckinBot)
-// @license      GPL-2.0-only
+// @license CC-BY-NC-SA-4.0; https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+// @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
 (function() {
     'use strict';
