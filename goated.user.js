@@ -6,6 +6,7 @@
 // @author       YourName
 // @match        *://*/*
 // @grant        GM_addStyle
+// @license      MIT
 // ==/UserScript==
 
 (function() {
