@@ -1,6 +1,5 @@
 // ==User Script==
-// @name         FvckinBot Popup
-// @namespace    http://tampermonkey.net/
+// @name         FvckinBot for Goated
 // @version      1.0
 // @description  A draggable popup for FvckinBot
 // @author       FvckinBot
