@@ -4,11 +4,13 @@
 // @version      1.0
 // @description  A draggable popup for FvckinBot
 // @author       FvckinBot
+// @match        *://*/*
 // @include       /^https?:\/\/[^/]*goated[^/]*\/.*$/
 // @grant        GM_addStyle
 // @grant        GM_xmlhttpRequest
 // @connect      api.allorigins.win
 // @run-at       document-idle
+// @copyright    2025, FvckinBot (https://openuserjs.org/users/FvckinBot)
 // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/User Script==
 
