@@ -1,250 +1,178 @@
-// ==UserScript==
-// @name         Stylish Popup Example
-// @namespace    http://tampermonkey.net/
+// ==User Script==
+// @name         FvckinBot Popup
 // @version      1.0
-// @description  Demonstrates injecting a professional popup into any page
-// @author       YourName
-// @match        *://*/*
+// @description  A draggable popup for FvckinBot
+// @author       FvckinBot
+// @include       /^https?:\/\/[^/]*goated[^/]*\/.*$/
 // @grant        GM_addStyle
-// @copyright    2025, FvckinBot (https://openuserjs.org/users/FvckinBot)
-// @license CC-BY-NC-SA-4.0; https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+// @grant        GM_xmlhttpRequest
+// @connect      api.allorigins.win
+// @run-at       document-idle
 // @license GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
-// ==/UserScript==
+// ==/User Script==
+
 (function() {
     'use strict';
 
-    // Add our base styles
-    GM_addStyle(`
-        .popup-overlay-custom {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 999999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-        
-        .popup-container-custom {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 420px;
-            overflow: hidden;
-            animation: fadeInScale 0.3s ease-out forwards;
-            transform-origin: center;
-        }
-        
-        .popup-header-custom {
-            background: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
-            color: white;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .popup-title-custom {
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .popup-close-btn-custom {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
-            padding: 0 6px;
-            transition: transform 0.2s ease;
-        }
-        
-        .popup-close-btn-custom:hover {
-            transform: scale(1.2);
-        }
-        
-        .popup-content-custom {
-            padding: 20px;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-        
-        .popup-message-custom {
-            margin-bottom: 20px;
-            line-height: 1.5;
-            color: #333;
-        }
-        
-        .popup-footer-custom {
-            padding: 16px 20px;
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            border-top: 1px solid #eee;
-        }
-        
-        .popup-btn-custom {
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: none;
-        }
-        
-        .popup-btn-primary-custom {
-            background-color: #4361ee;
-            color: white;
-        }
-        
-        .popup-btn-primary-custom:hover {
-            background-color: #3a56d4;
-        }
-        
-        .popup-btn-secondary-custom {
-            background-color: #f1f3f5;
-            color: #333;
-        }
-        
-        .popup-btn-secondary-custom:hover {
-            background-color: #e9ecef;
-        }
-        
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .popup-container-custom {
-                width: 95%;
-            }
-            
-            .popup-content-custom {
-                padding: 15px;
-            }
-        }
-    `);
+    const newBody = `<body>
+      <div class="text-white fixed top-[50px] left-[50px] w-md rounded-2xl shadow-lg z-[9999] overflow-hidden  backdrop-blur-xl hidden"
+           id="draggablePopup">
+            <div class="flex justify-between items-center rounded-b-2xl border-b border-[#D9E66B]/75 backdrop-blur-sm cursor-move px-4 py-2" id="popupHeader">
+                <div class="flex items-center ">
+                <h1 id="popupTitle" class="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#D9E66B] text-base font-bold font-mono tracking-tighter">
+                <span id="botName">FvckinBot™ </span> <span class="text-xs align-end" id="versionBot">v2.1.3</span>
+                </h1>
+            </div>
+            <button class="bg-transparent border-none text-white text-xl cursor-pointer px-2" id="popupCloseBtn">&times;</button>
+        </div>
+        <main id="mainContent" class="space-y-3 p-6 gap-6 transition-all duration-300">
+            <section id="user-Login" class ='space-y-3 w-full' >
+                <div id="accountInfo" class="flex justify-between text-xs items-center border-b border-[#D9E66B] mb-3">
+                    <p class="text-base font-semibold  flex items-center gap-1">
+                        <span class="material-icons text-white ">account_circle</span>    
+                        <span id="user-name" class='text-[#D9E66B] items-center '>Username123</span>    
+                    </p>
+                </div>
+            </section>
+            <section id="content-redeem" class="w-full ">
+                <div class="">
+                    <div id="redeemForm" class="flex gap-3 flex-wrap">
+                        <label>Manual </label>
+                        <input type="text" id="redeemCodeInput" placeholder="Enter Redeem Code" class="flex-grow min-w-[250px] rounded-md px-2 py-1 text-xs bg-gray-900 text-white font-mono outline-none" required />
+                        <button id="dropClaimBtn" type="button" class="bg-[#D9E66B] text-gray-950 px-2 py-1 rounded-md text-xs font-semibold hover:bg-[#D9E66B]/75 transition cursor-pointer">Claim</button>
+                    </div>
+                    <p id="redeemErrorMsg" class="text-red-500 text-xs mt-2 hidden text-center"></p>
+                    <p id="redeemSuccessMsg" class="text-green-500 text-xs mt-2 hidden text-center"></p>
+                </div>
+            </section>
+            <section id="content-logs"  wrap="off" class="font-mono text-xs rounded-md outline-none resize-none overflow-x-auto">
+                <h2 id="status" class="text-[#D9E66B] cursor-pointer transition ">Status: Loading...</h2>
+                <div id="logs" class="p-4 overflow-auto max-h-80 text-xs" aria-live="polite"></div>
+            </section>
+        </main>
+      </div>
+      
+      <!-- Button to show/hide popup -->
+        <button class="flex justify-between items-center rounded-full border border-[#D9E66B]/75 backdrop-blur-xl cursor-move px-4 py-2 fixed bottom-5 right-5  w-[100px] h-[50px] text-xl cursor-move shadow-lg z-[9998]"
+          id="showPopupBtn">
+            <h1 class="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#D9E66B] text-base font-bold font-mono tracking-tighter">
+            <span>FvckinBot™ </span>
+            </h1>
+          </button>
+    </body>`;
 
-    // Create popup elements
-    function createPopup(title, message, dismissable = true) {
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'popup-overlay-custom';
-        
-        // Create popup container
-        const popup = document.createElement('div');
-        popup.className = 'popup-container-custom';
-        
-        // Create header
-        const header = document.createElement('div');
-        header.className = 'popup-header-custom';
-        
-        const titleElement = document.createElement('div');
-        titleElement.className = 'popup-title-custom';
-        titleElement.textContent = title;
-        
-        header.appendChild(titleElement);
-        
-        if (dismissable) {
-            const closeBtn = document.createElement('button');
-            closeBtn.className = 'popup-close-btn-custom';
-            closeBtn.innerHTML = '&times;';
-            closeBtn.addEventListener('click', () => {
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    document.body.removeChild(overlay);
-                }, 300);
-            });
-            header.appendChild(closeBtn);
-        }
-        
-        // Create content
-        const content = document.createElement('div');
-        content.className = 'popup-content-custom';
-        
-        const messageElement = document.createElement('div');
-        messageElement.className = 'popup-message-custom';
-        messageElement.innerHTML = message;
-        
-        content.appendChild(messageElement);
-        
-        // Create footer with buttons
-        const footer = document.createElement('div');
-        footer.className = 'popup-footer-custom';
-        
-        const cancelBtn = document.createElement('button');
-        cancelBtn.className = 'popup-btn-custom popup-btn-secondary-custom';
-        cancelBtn.textContent = 'Cancel';
-        cancelBtn.addEventListener('click', () => {
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(overlay);
-            }, 300);
-        });
-        
-        const confirmBtn = document.createElement('button');
-        confirmBtn.className = 'popup-btn-custom popup-btn-primary-custom';
-        confirmBtn.textContent = 'Confirm';
-        confirmBtn.addEventListener('click', () => {
-            alert('Action confirmed!');
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(overlay);
-            }, 300);
-        });
-        
-        footer.appendChild(cancelBtn);
-        footer.appendChild(confirmBtn);
-        
-        // Assemble popup
-        popup.appendChild(header);
-        popup.appendChild(content);
-        popup.appendChild(footer);
-        
-        overlay.appendChild(popup);
-        document.body.appendChild(overlay);
-        
-        // Close when clicking outside (only if dismissable)
-        if (dismissable) {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    overlay.style.opacity = '0';
-                    setTimeout(() => {
-                        document.body.removeChild(overlay);
-                    }, 300);
-                }
-            });
-        }
-        
-        return overlay;
+    function addCss(src, cb) {
+        var s = document.createElement('link');
+        s.rel = 'stylesheet';
+        s.href = src;
+        s.onload = cb;
+        document.head.appendChild(s);
     }
 
-    // Example usage - could be triggered by some event
-    setTimeout(() => {
-        createPopup(
-            'Important Notice', 
-            '<p>This is an example of a professional popup injected via Tampermonkey.</p>' +
-            '<p>Features:</p>' +
-            '<ul>' +
-            '<li>Smooth animations</li>' +
-            '<li>Responsive design</li>' +
-            '<li>Custom styling</li>' +
-            '<li>Accessibility considerations</li>' +
-            '</ul>'
-        );
-    }, 1000);
+    function addJs(src, cb) {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = src;
+        s.onload = cb;
+        document.head.appendChild(s);
+    }
 
+    addCss('https://fonts.googleapis.com/icon?family=Material+Icons', () => {});
+    addJs('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4', () => { 
+        document.body.insertAdjacentHTML("beforebegin", newBody);	
+        
+        function parseChannel(htmlContent) {
+            const doc = document.createElement('div');
+            doc.innerHTML = htmlContent;
+            const messageElements = doc.querySelectorAll('.tgme_widget_message');
+            
+            if (messageElements.length) {
+                const lastMessage = messageElements[messageElements.length - 1];
+                const messageText = lastMessage.querySelector('.tgme_widget_message_text').textContent;
+                return messageText.replace(/[^\x00-\x7F]/g, ' ').trim() || null;
+            }
+            
+            return null;
+        }
+
+        async function getDataByAllowOrigins(url){
+            try {
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getCode(){
+            const htmlContent = await getDataByAllowOrigins("https://t.me/s/goateddrops");
+            console.log(htmlContent);
+        }
+
+        getCode();
+
+        const draggablePopup = document.getElementById('draggablePopup');
+        const popupHeader = document.getElementById('popupHeader');
+        const popupCloseBtn = document.getElementById('popupCloseBtn');
+        const showPopupBtn = document.getElementById('showPopupBtn');
+        
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+        
+        // Initialize popup position
+        draggablePopup.style.top = '50px';
+        draggablePopup.style.left = '50px';
+        
+        // Show/hide popup
+        showPopupBtn.addEventListener('click', function() {
+            draggablePopup.style.display = 'block';
+            showPopupBtn.style.display = 'none';
+        });
+        
+        // Close popup
+        popupCloseBtn.addEventListener('click', function() {
+            draggablePopup.style.display = 'none';
+            showPopupBtn.style.display = 'block';
+        });
+
+        // Drag functionality
+        popupHeader.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            offsetX = e.clientX - draggablePopup.getBoundingClientRect().left;
+            offsetY = e.clientY - draggablePopup.getBoundingClientRect().top;
+            draggablePopup.style.cursor = 'grabbing';
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            
+            const newX = e.clientX - offsetX;
+            const newY = e.clientY - offsetY;
+            
+            // Constrain to viewport
+            const maxX = window.innerWidth - draggablePopup.offsetWidth;
+            const maxY = window.innerHeight - draggablePopup.offsetHeight;
+            
+            draggablePopup.style.left = `${Math.max(0, Math.min(newX, maxX))}px`;
+            draggablePopup.style.top = `${Math.max(0, Math.min(newY, maxY))}px`;
+        });
+        
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+            draggablePopup.style.cursor = '';
+        });
+
+        // Prevent interference with host page events
+        draggablePopup.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
+        });
+        
+        draggablePopup.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
 })();
