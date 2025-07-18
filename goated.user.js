@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         Goated FvckinBot™
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.1
 // @description  Claimer For Goated
 // @author       FvckinBot™
 // @match        https://www.goated.com/redeem
 // @run-at       document-end
-// @require      https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4
-// @grant        none
+// @require      https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4    
+// @downloadURL  https://github.com/FvckinBot/TamperMonkey/raw/refs/heads/main/goated.user.js
+// @updateURL    https://github.com/FvckinBot/TamperMonkey/raw/refs/heads/main/goated.user.js
 // ==/UserScript==
 
 (function() {
