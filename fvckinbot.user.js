@@ -5,7 +5,7 @@
 // @author       FvckinBot™
 // @include      *://*goated*/?modal=redeem*
 // @include      *://*stake*/settings/offers*
-// @run-at		 document-end
+// @run-at       document-end
 // @downloadURL  https://github.com/FvckinBot/TamperMonkey/raw/refs/heads/main/fvckinbot.user.js
 // @updateURL    https://github.com/FvckinBot/TamperMonkey/raw/refs/heads/main/fvckinbot.user.js
 // ==/UserScript==
