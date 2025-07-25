@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FvckinBot™ Claimer
-// @version      1.2.3
+// @version      1.3
 // @description  Claimer For STAKE,GOATED
 // @author       FvckinBot™
 // @include      *://*goated*/?modal=redeem*
