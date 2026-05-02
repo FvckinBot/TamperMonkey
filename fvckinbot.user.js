@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FvckinBot™ Claimer
-// @version      1.9.2
+// @version      1.9.3
 // @description  Bot Helper for Claiming Drop, Bonus and Reload of Stake.com
 // @author       FvckinBot™
 // @include      *://*stake*/settings/offers*
