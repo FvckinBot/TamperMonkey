@@ -1,0 +1,500 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     FVCKINBOT™ UI TEMPLATES
+     Pisahkan file ini dan load via fetch() atau embed sebagai string
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- HEADER TEMPLATE -->
+<template id="tpl-header">
+  <div class="px-3 sm:px-6 py-3 flex justify-between items-center shrink-0 relative overflow-hidden gap-3">
+    <div class="absolute -top-10 -left-10 w-32 h-32 blur-[50px] pointer-events-none bg-[var(--primary)]/20"></div>
+    <div class="flex items-center gap-3 sm:gap-4 relative z-10 flex-shrink min-w-0">
+      <div class="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5 flex-shrink-0">
+        <span id="connect-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60 bg-[var(--primary)]"></span>
+        <span id="connect-dot" class="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 shadow-lg bg-[var(--primary)] shadow-[var(--primary)]"></span>
+      </div>
+      <div class="flex flex-col min-w-0 leading-tight">
+        <div class="flex items-center gap-2">
+          <h1 class="text-base sm:text-xl tracking-tighter uppercase text-[var(--white)] truncate font-black italic">
+            <span data-tpl="firstName"></span><span class="text-[var(--primary)]" data-tpl="secondName"></span>
+          </h1>
+          <span class="text-[9px] sm:text-[10px] text-[var(--white)]/50 font-black tracking-widest bg-[var(--white)]/10 px-1.5 py-0.5 rounded">
+            V<span data-tpl="version"></span>
+          </span>
+        </div>
+        <span class="text-[9px] sm:text-[10px] text-[var(--white)]/50 uppercase tracking-widest font-bold truncate mt-0.5" data-tpl="hostname"></span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 sm:gap-4 relative z-10 flex-shrink-0">
+      <div class="flex items-center p-1 sm:p-1.5 bg-[var(--white)]/[0.05] border border-[var(--white)]/10 rounded-xl shadow-inner transition-all overflow-hidden">
+        <div class="hidden sm:flex items-center gap-2 px-3 border-r border-[var(--white)]/10 min-w-0">
+          <div class="text-[11px] sm:text-xs text-[var(--primary)] group-hover:scale-110 transition-transform">ID:</div>
+          <span id="user-id" class="text-xs sm:text-sm text-[var(--white)] font-bold tabular-nums tracking-tight">--</span>
+        </div>
+        <div class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 min-w-fit justify-center group">
+          <div class="text-[11px] sm:text-xs text-[var(--primary)] group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+          <span id="user-credits" class="text-xs sm:text-sm text-[var(--white)] font-bold tabular-nums tracking-tight">--</span>
+        </div>
+      </div>
+      <button id="btn-logout" onclick="window.dispatchEvent(new CustomEvent('ui:logout'))"
+        class="group h-9 w-9 sm:h-[42px] sm:w-[42px] flex items-center justify-center rounded-xl bg-[var(--error)]/10 border border-[var(--error)]/30 text-[var(--error)] hover:bg-[var(--error)] hover:text-[var(--black)] transition-all duration-300 active:scale-95 flex-shrink-0" title="Terminate Session">
+        <span class="text-sm sm:text-base transition-transform group-hover:rotate-90 duration-500">
+          <i class="fa-solid fa-power-off"></i>
+        </span>
+      </button>
+    </div>
+  </div>
+</template>
+
+<!-- NAVBAR TEMPLATE -->
+<template id="tpl-navbar">
+  <div class="relative flex items-center justify-between w-full max-w-[1400px] mx-auto min-h-[40px]">
+    <div class="flex items-center gap-2 bg-[var(--black)]/20 px-3 py-1.5 rounded-lg border border-[var(--white)]/5">
+      <div class="w-5 h-5 sm:w-6 sm:h-6 bg-[var(--primary)]/10 text-[var(--primary)] rounded flex items-center justify-center">
+        <i class="fa-solid fa-globe"></i>
+      </div>
+      <div class="flex flex-col leading-none">
+        <span class="text-[var(--white)]/40 uppercase text-[8px] sm:text-[9px] tracking-widest font-bold">Browsers</span>
+        <span id="user-browser" class="text-[var(--white)] uppercase font-bold text-[10px] sm:text-xs mt-0.5">0 / 0</span>
+      </div>
+    </div>
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-fit">
+      <div class="flex bg-[var(--black)]/40 p-1 rounded-xl border border-[var(--white)]/10 w-full sm:w-auto">
+        <button id="nav-accounts" class="nav-tab flex-1 sm:flex-none flex items-center justify-center py-2 px-5 sm:px-6 transition-all duration-300 rounded-lg text-[var(--white)]/50 hover:text-[var(--white)]" data-target="pane-accounts">
+          <i class="fa-solid fa-users"></i>
+        </button>
+        <button id="nav-manual" class="nav-tab flex-1 sm:flex-none flex items-center justify-center py-2 px-5 sm:px-6 transition-all duration-300 rounded-lg text-[var(--white)]/50 hover:text-[var(--white)]" data-target="pane-manual">
+          <i class="fa-solid fa-gift"></i>
+        </button>
+        <button id="nav-captcha" class="hidden nav-tab flex-1 sm:flex-none flex items-center justify-center py-2 px-5 sm:px-6 transition-all duration-300 rounded-lg text-[var(--white)]/50 hover:text-[var(--white)]" data-target="pane-captcha">
+          <i class="fa-solid fa-robot"></i>
+        </button>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 bg-[var(--black)]/20 px-3 py-1.5 rounded-lg border border-[var(--white)]/5">
+      <div class="flex flex-col items-end leading-none">
+        <span class="text-[var(--white)]/40 uppercase text-[8px] sm:text-[9px] tracking-widest font-bold">Captcha</span>
+        <span id="user-captcha" class="text-[var(--white)] uppercase font-bold text-[10px] sm:text-xs mt-0.5">0</span>
+      </div>
+      <div class="w-5 h-5 sm:w-6 sm:h-6 bg-[var(--primary)]/10 text-[var(--primary)] rounded flex items-center justify-center">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- FOOTER TEMPLATE -->
+<template id="tpl-footer">
+  <div class="relative w-full overflow-hidden">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 py-3 sm:py-4 w-full gap-4 relative z-10">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 group cursor-default">
+          <div class="w-2 h-2 rounded-full bg-[var(--primary)]/40 group-hover:bg-[var(--primary)] transition-colors duration-500"></div>
+          <p class="text-[10px] sm:text-xs text-[var(--white)]/40 uppercase tracking-widest font-bold">
+            &copy; 2026 <span class="text-[var(--white)]/70 group-hover:text-[var(--white)] transition-colors" data-tpl="botName"></span>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center items-center gap-2 sm:gap-3" data-tpl="footer-links">
+        <!-- Links injected via JS -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- MAIN LAYOUT TEMPLATE -->
+<template id="tpl-layout">
+  <div class="font-mono flex flex-col bg-cover bg-fixed bg-center text-base selection:text-[var(--white)] selection:bg-[var(--primary)]/30 overflow-y-auto lg:h-screen lg:overflow-hidden"
+       style="background-color: var(--black); background-image: url('${CONFIG.urls.background}');">
+    <header id="fvckin-header" class="flex-shrink-0 sticky top-0 z-50 w-full shadow-2xl border-b border-[var(--white)]/5 backdrop-blur-xl bg-[var(--third)]/90"></header>
+    <main class="flex-1 w-full mx-auto max-w-6xl px-2 sm:px-4 py-4 lg:py-6 flex flex-col lg:flex-row gap-4 lg:gap-6 h-[calc(100vh-120px)] min-h-0">
+      <div id="fvckin-dashboard" class="hidden w-full lg:w-3/5 flex flex-col lg:min-h-0 lg:h-full">
+        <section class="flex flex-col h-full backdrop-blur-lg border border-[var(--white)]/10 rounded-2xl sm:rounded-[1.5rem] overflow-hidden shadow-xl bg-[var(--third)]/70">
+          <div id="fvckin-navbar" class="w-full flex-shrink-0 bg-[var(--third)]/40 px-2 sm:px-4 py-2 shrink-0 border-b border-[var(--white)]/5 backdrop-blur-sm"></div>
+          <div id="fvckin-pane" class="flex-1 w-full overflow-y-auto custom-scrollbar flex flex-col items-center sm:items-start p-3 sm:p-4 relative"></div>
+        </section>
+      </div>
+      <aside class="w-full lg:w-2/5 flex flex-col h-[400px] lg:h-full min-h-0 mb-4 lg:mb-0 mx-auto">
+        <section class="flex flex-col h-full backdrop-blur-lg border border-[var(--white)]/10 rounded-2xl sm:rounded-[1.5rem] overflow-hidden shadow-xl bg-[var(--third)]/70">
+          <div class="px-6 sm:px-8 py-3 border-b border-[var(--white)]/5 flex-shrink-0 flex justify-between items-center bg-[var(--third)]/60">
+            <div class="flex items-center gap-3">
+              <span id="ping-latency" class="text-[10px] sm:text-xs text-[var(--white)]/70 font-black uppercase tracking-[0.15em]"></span>
+              <div class="w-6 h-6 bg-[var(--primary)]/10 border border-[var(--primary)]/30 text-[var(--primary)] rounded flex items-center justify-center animate-pulse">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <span class="text-[10px] sm:text-xs text-[var(--white)]/70 font-black uppercase tracking-[0.15em]">System Logs</span>
+            </div>
+            <button onclick="document.getElementById('fvckin-logs').innerHTML=''"
+              class="text-[10px] sm:text-xs opacity-70 hover:opacity-100 transition-opacity uppercase font-black tracking-widest text-[var(--primary)] p-2 -mr-2">
+              Clear
+            </button>
+          </div>
+          <div id="fvckin-logs" class="flex-1 overflow-y-auto p-3 sm:p-4 custom-scrollbar font-mono text-xs leading-relaxed text-[var(--white)]/80"></div>
+        </section>
+      </aside>
+    </main>
+    <footer id="fvckin-footer" class="flex-shrink-0 relative bottom-0 w-full border-t border-[var(--white)]/[0.05] backdrop-blur-md bg-[var(--third)]/80 mt-auto lg:mt-0"></footer>
+    <div id="modal-registry" class="relative z-[100]"></div>
+  </div>
+</template>
+
+<!-- PANE: ACCOUNTS TEMPLATE -->
+<template id="tpl-pane-accounts">
+  <div id="pane-accounts" class="tab-pane flex flex-col animate-fade-in min-h-0 w-full space-y-3 overflow-hidden">
+    <div class="px-4 sm:px-9 pt-3 sm:pt-3">
+      <div class="flex flex-wrap sm:flex-nowrap items-center w-full mt-auto gap-3 sm:gap-4">
+        <div class="flex flex-col min-w-[100px]">
+          <span class="text-[8px] text-[var(--white)]/30 uppercase tracking-[0.3em] font-bold">Capacity</span>
+          <div class="flex items-center gap-2 mt-0.5">
+            <span id="user-accounts" class="text-lg font-black text-[var(--primary)] tracking-tighter">04</span>
+            <span class="text-[var(--white)]/10 text-xs">/</span>
+            <span class="text-sm font-bold text-[var(--white)]/20">10</span>
+          </div>
+        </div>
+        <div class="h-8 w-[1px] bg-gradient-to-b from-transparent via-[var(--white)]/20 to-transparent"></div>
+        <button onclick="window.dispatchEvent(new CustomEvent('ui:request-deploy'))"
+          class="group flex flex-1 w-full sm:w-auto items-center justify-between px-3 sm:px-4 py-2 rounded-2xl border border-[var(--primary)]/20 hover:border-[var(--primary)] bg-[var(--primary)]/5 hover:bg-[var(--primary)]/10 transition-all duration-500 active:scale-95">
+          <div class="flex items-center gap-3">
+            <div class="p-1.5 rounded-lg bg-[var(--primary)]/10 text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-[var(--black)] transition-colors">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+            <div class="flex flex-col items-start">
+              <span class="text-[var(--white)] text-[10px] font-black uppercase tracking-widest">Add Account</span>
+              <span class="text-[var(--primary)]/40 text-[8px] font-bold leading-none uppercase hidden sm:block">Deploy New Instance</span>
+            </div>
+          </div>
+          <div class="text-[var(--white)]/10 group-hover:text-[var(--primary)]/40 transition-colors">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="relative w-full px-2 sm:px-8 mt-2">
+      <div class="absolute top-1/2 -translate-y-1/2 left-0 z-10 ">
+        <button id="prev-acc" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[var(--third)]/60 border border-[var(--white)]/10 backdrop-blur-md text-[var(--white)] hover:border-[var(--primary)]/50 transition-all flex items-center justify-center group active:scale-90 shadow-lg">
+          <div class="group-hover:-translate-x-0.5 transition-transform flex items-center justify-center">
+            <i class="fa-solid fa-chevron-left"></i>
+          </div>
+        </button>
+      </div>
+      <div class="overflow-hidden rounded-xl">
+        <div id="account-list" class="flex flex-nowrap transition-transform duration-500 ease-out gap-2 sm:gap-4"></div>
+      </div>
+      <div class="absolute top-1/2 -translate-y-1/2 right-0 z-10 ">
+        <button id="next-acc" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[var(--third)]/60 border border-[var(--white)]/10 backdrop-blur-md text-[var(--white)] hover:border-[var(--primary)]/50 transition-all flex items-center justify-center group active:scale-90 shadow-lg">
+          <div class="group-hover:translate-x-0.5 transition-transform flex items-center justify-center">
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </button>
+      </div>
+      <div id="account-dots" class="flex justify-center gap-1.5 mt-4"></div>
+    </div>
+  </div>
+</template>
+
+<!-- PANE: MANUAL CLAIM TEMPLATE -->
+<template id="tpl-pane-manual">
+  <div id="pane-manual" class="hidden tab-pane flex-col animate-fade-in min-h-0 overflow-hidden w-full mx-auto max-w-md">
+    <div class="space-y-4 sm:space-y-6 p-3">
+      <div class="bg-[var(--primary)]/10 border border-[var(--primary)]/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 relative overflow-hidden group">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-[8px] sm:text-[9px] text-[var(--primary)] uppercase tracking-[0.2em] font-bold">last Drop Code</span>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <code id="lastCode" class="text-sm sm:text-base font-mono text-[var(--white)] font-bold tracking-wider">SUMMER-DROP-2024</code>
+          <button id='btn-copy-last' class="bg-[var(--primary)] text-[var(--black)] px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase hover:brightness-110 active:scale-95 transition-all flex-shrink-0">
+            Use
+          </button>
+        </div>
+        <div class="absolute -right-4 -top-4 w-16 h-16 bg-[var(--primary)]/10 blur-3xl rounded-full"></div>
+      </div>
+      <div>
+        <label class="block mb-1.5 sm:mb-2 text-[9px] sm:text-[10px] text-[var(--primary)] uppercase tracking-[0.2em] opacity-80">Input Code</label>
+        <div class="relative group">
+          <input type="text" id="input-code" placeholder="Enter drop or bonus code"
+            class="w-full bg-[var(--white)]/5 border border-[var(--white)]/10 rounded-xl sm:rounded-2xl pl-4 pr-10 sm:pr-12 py-3 sm:py-4 text-xs sm:text-sm text-[var(--white)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/40 focus:border-[var(--primary)]/50 transition-all placeholder:text-[var(--white)]/20">
+          <button onclick="navigator.clipboard.readText().then(text => { document.getElementById('input-code').value = text; })"
+            class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 p-2 text-[var(--white)]/40 hover:text-[var(--primary)] transition-colors">
+            <i class="fas fa-paste text-xs sm:text-sm"></i>
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-1.5 sm:gap-2 p-1 sm:p-1.5 bg-[var(--white)]/5 border border-[var(--white)]/10 rounded-xl sm:rounded-2xl">
+        <button class="btn-claim py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-bold uppercase hover:bg-[var(--white)]/10 text-[var(--white)]/50 transition-all active:scale-95" data-type="drop">Drop</button>
+        <button class="btn-claim py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-bold uppercase hover:bg-[var(--white)]/10 text-[var(--white)]/50 transition-all active:scale-95" data-type="bonus">Bonus</button>
+        <button class="btn-claim py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-bold uppercase hover:bg-[var(--white)]/10 text-[var(--white)]/50 transition-all active:scale-95" data-type="reload">Reload</button>
+      </div>
+      <div id="error-manual-claim" style="display:none" class="bg-[var(--error)]/10 text-[var(--error)] text-[10px] sm:text-[11px] border border-[var(--error)]/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex items-center gap-2 sm:gap-3 animate-shake"></div>
+    </div>
+  </div>
+</template>
+
+<!-- PANE: CAPTCHA TEMPLATE -->
+<template id="tpl-pane-captcha">
+  <div id="pane-captcha" class="hidden tab-pane flex-col animate-fade-in min-h-0 w-full lg:max-h-none sm:max-h-3/4">
+    <div id="captcha-token-list" class="flex flex-col overflow-y-auto space-y-2"></div>
+  </div>
+</template>
+
+<!-- ACCOUNT CARD TEMPLATE (for VirtualDOM) -->
+<template id="tpl-account-card">
+  <div class="relative w-full p-4 sm:p-5 bg-[var(--third)]/50 border border-[var(--white)]/10 rounded-2xl transition-all duration-300 hover:border-[var(--primary)]/50 flex flex-col gap-4 shadow-lg" data-id="">
+    
+    <!-- HEADER: User Info & Actions -->
+    <div class="flex flex-row items-start justify-between gap-3 border-b border-[var(--white)]/10 pb-4">
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3 flex-1 min-w-0">
+        <div class="flex items-center gap-2 mr-1">
+          <div class="relative flex h-2.5 w-2.5 flex-shrink-0" title="Status BanDrop">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-status"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-status"></span>
+          </div>
+          <div class="text-sm sm:text-base font-bold text-[var(--primary)] uppercase tracking-widest truncate max-w-[120px] sm:max-w-[200px]" data-field="username"></div>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="px-2 py-1 rounded-md border bg-reload-status text-reload-text border-reload-border flex items-center gap-1.5 shadow-sm" title="Status Reload">
+            <span class="text-[9px] uppercase">Reload:</span>
+            <span class="text-[10px] font-mono font-bold uppercase" data-field="reload"></span>
+          </div>
+          <div class="px-2 py-1 rounded-md bg-[var(--secondary)]/5 text-[var(--white)]/50 border border-[var(--white)]/5 flex items-center gap-1.5 shadow-sm" title="Status Ticket">
+            <span class="text-[9px] uppercase font-bold text-[var(--white)]/40">Ticket:</span>
+            <span class="text-[10px] text-[var(--white)] font-mono font-bold" data-field="ticket"></span>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button data-action="reset" class="w-8 h-8 bg-[var(--warn)]/10 border border-[var(--warn)]/30 text-[var(--warn)] rounded-lg flex items-center justify-center hover:bg-[var(--warn)] hover:text-[var(--black)] transition-all active:scale-95" title="Reset Claimed">
+          <span class="text-sm"><i class="fa-solid fa-undo"></i></span>
+        </button>
+        <button data-action="terminate" class="w-8 h-8 bg-[var(--error)]/10 border border-[var(--error)]/30 text-[var(--error)] rounded-lg flex items-center justify-center hover:bg-[var(--error)] hover:text-[var(--black)] transition-all active:scale-95" title="Unlink Account">
+          <span class="text-sm"><i class="fa-solid fa-unlink"></i></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- BODY: Balance & Stats -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 bg-[var(--black)]/20 p-4 rounded-xl border border-[var(--white)]/5">
+      <div class="flex items-center gap-3 w-full md:w-auto">
+        <button data-action="currency" class="w-12 h-12 flex-shrink-0 rounded-xl bg-[var(--third)]/50 border border-[var(--white)]/20 hover:border-[var(--primary)] flex items-center justify-center transition-all active:scale-95 shadow-sm">
+          <img class="w-8 h-8 object-contain" data-field="currency-img" src="" alt="coin">
+        </button>
+        <div class="flex flex-col justify-center">
+          <div class="flex items-baseline gap-2 truncate">
+            <span class="text-xl sm:text-2xl font-mono font-black text-[var(--white)] tracking-tight" data-field="balance"></span>
+            <span class="text-xs sm:text-sm text-[var(--primary)] font-bold uppercase" data-field="currency-symbol"></span>
+          </div>
+          <span class="text-xs text-[var(--white)]/50 font-semibold tracking-wide mt-0.5">&asymp; $<span data-field="balance-usd"></span></span>
+        </div>
+      </div>
+      <div class="cursor-pointer flex flex-row md:flex-col items-center justify-between md:justify-center w-full md:w-auto px-4 py-2.5 gap-3 md:gap-1.5 bg-[var(--primary)]/[0.03] hover:bg-[var(--primary)]/[0.08] rounded-xl transition-all border border-[var(--primary)]/10 min-w-[170px] active:scale-95 select-none" data-action="history">
+        <div class="flex items-center gap-1.5">
+          <span class="text-[8px] text-[var(--primary)]/70 uppercase tracking-widest font-bold">RESET in</span>
+          <span class="text-[7px] text-[var(--warn)]/60 font-mono daily-reset-countdown">--:--:--</span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="text-base sm:text-lg font-mono font-black text-[var(--primary)]" data-field="daily-count"></span>
+          <span class="text-[9px] text-[var(--white)]/40 uppercase font-bold">/</span>
+          <span class="text-xs sm:text-sm font-mono font-bold text-[var(--white)]/60">10</span>
+          <span class="text-[8px] text-[var(--white)]/30 uppercase font-bold">Limit</span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs sm:text-sm font-mono font-bold text-[var(--success)]">$<span data-field="daily-claimed"></span></span>
+          <span class="text-[8px] text-[var(--white)]/30 uppercase">claimed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER: Settings & Toggles -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-4 pt-1">
+      <button data-action="min-selector" class="w-full sm:w-auto flex flex-col items-center sm:items-start gap-1.5 bg-[var(--black)]/30 border border-[var(--white)]/10 rounded-lg px-4 py-2 hover:border-[var(--primary)]/50 transition-all shadow-sm">
+        <div class="flex items-center gap-2">
+          <span class="text-[9px] text-[var(--white)]/40 uppercase font-bold tracking-widest">minValue Status</span>
+          <i class="fa-solid fa-caret-down text-[8px] text-[var(--primary)]"></i>
+        </div>
+        <div class="flex items-center justify-center flex-wrap gap-2" data-field="minvalue-badges"></div>
+      </button>
+      <div class="flex flex-row flex-wrap justify-center sm:justify-end items-center gap-4 sm:gap-5 w-full sm:w-auto" data-field="toggles"></div>
+    </div>
+  </div>
+</template>
+
+<!-- MODAL: DEPLOY TEMPLATE -->
+<template id="tpl-modal-deploy">
+  <div class="p-4 space-y-4">
+    <div>
+      <label class="text-base text-[var(--white)] font-bold truncate uppercase leading-tight block mb-2">Apikey</label>
+      <input type="text" id="deploy-apikey" placeholder="Enter API Key (96 characters)"
+        class="w-full p-3 bg-[var(--third)]/40 text-[var(--white)] border border-[var(--primary)]/30 rounded-lg outline-none transition-all text-sm focus:border-[var(--primary)]">
+    </div>
+    <div class="bg-[var(--primary)]/5 p-3 rounded-lg border border-[var(--primary)]/10">
+      <p class="text-sm text-[var(--white)]/50 leading-relaxed">
+        <span class="text-[var(--primary)] font-bold">Note:</span> Ensure the apikey is active.
+      </p>
+    </div>
+    <p id="deploy-error" class="text-sm text-center font-bold tracking-tighter hidden text-[var(--error)]"></p>
+  </div>
+  <div class="flex gap-3 pt-2">
+    <button id="deploy-confirm" class="flex-1 py-3 bg-[var(--primary)] hover:brightness-125 text-[var(--black)] text-base font-bold uppercase rounded-lg shadow-lg transition-all">
+      <i class="fa-solid fa-link"></i> Link Account
+    </button>
+  </div>
+</template>
+
+<!-- MODAL: LOGIN TEMPLATE -->
+<template id="tpl-modal-login">
+  <div class="p-4 space-y-4">
+    <div>
+      <label class="text-base text-[var(--white)] font-bold truncate uppercase leading-tight block mb-2">License</label>
+      <input type="text" id="login-license" placeholder="Enter License Key" class="w-full p-3 bg-[var(--third)]/40 text-[var(--white)] border border-[var(--primary)]/30 rounded-lg outline-none transition-all text-sm focus:border-[var(--primary)]">
+    </div>
+  </div>
+  <div class="flex gap-3 pt-2">
+    <button id="login-confirm" class="flex-1 py-3 hover:brightness-125 text-[var(--black)] bg-[var(--primary)] text-base font-bold uppercase rounded-lg shadow-lg transition-all">
+      <i class="fa-solid fa-link"></i> Connect
+    </button>
+  </div>
+  <p id="login-error" class="text-sm text-center font-bold tracking-tighter hidden text-[var(--error)]"></p>
+</template>
+
+<!-- MODAL: TERMINATE TEMPLATE -->
+<template id="tpl-modal-terminate">
+  <div class="p-4 space-y-4">
+    <p class="text-[var(--white)]/50 text-sm leading-relaxed mb-4 text-center">
+      Are you sure you want to unlink <br>
+      <span id="terminate-username" class="text-[var(--error)] font-mono font-bold uppercase tracking-tighter"></span> ?
+    </p>
+  </div>
+  <div class="flex gap-3 pt-2">
+    <button id="terminate-confirm" class="flex-1 py-3 bg-[var(--error)] hover:brightness-125 text-[var(--third)] text-base font-bold uppercase rounded-lg shadow-lg transition-all">
+      <i class="fa-solid fa-unlink"></i> Unlink Account
+    </button>
+  </div>
+</template>
+
+<!-- MODAL: CURRENCIES TEMPLATE -->
+<template id="tpl-modal-currencies">
+  <div class="p-4 space-y-4">
+    <input type="text" id="currencies-search" placeholder="Search symbol..."
+      class="w-full bg-[var(--third)]/40 border border-[var(--primary)]/30 rounded-lg px-3 py-2 text-xs text-[var(--white)] outline-none focus:border-[var(--primary)]">
+    <div id="currencies-list" class="overflow-y-auto custom-scrollbar max-h-[40vh] space-y-1"></div>
+  </div>
+</template>
+
+<!-- MODAL: RESET STATS TEMPLATE -->
+<template id="tpl-modal-reset">
+  <div class="p-4 space-y-4">
+    <div class="bg-[var(--white)]/5 border border-[var(--white)]/10 rounded-xl p-4 space-y-3">
+      <div class="flex justify-between items-center">
+        <span class="text-xs text-[var(--white)]/40 uppercase">User</span>
+        <span id="reset-preview-user" class="text-sm font-bold text-[var(--white)]"></span>
+      </div>
+      <div class="h-px bg-[var(--white)]/10 w-full"></div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <span class="text-[10px] text-[var(--white)]/40 uppercase block">Total Drops</span>
+          <span id="reset-preview-drops" class="text-lg font-mono font-bold text-[var(--warn)]">0</span>
+        </div>
+        <div>
+          <span class="text-[10px] text-[var(--white)]/40 uppercase block">Total Claimed</span>
+          <span id="reset-preview-claimed" class="text-lg font-mono font-bold text-[var(--success)]">0</span>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-xs text-[var(--white)]/50 leading-relaxed">
+      Are you sure you want to <span class="text-[var(--warn)]">permanently wipe</span> these statistics? <br>
+      <span class="text-[var(--warn)]/80">
+        This will reset your counters and <b>clear all claim history</b> for this account.
+      </span>
+      <br>
+      <span class="font-bold italic underline">This action cannot be undone.</span>
+    </p>
+  </div>
+  <div class="flex gap-3 pt-2">
+    <button id="reset-stats-confirm" class="flex-1 py-3 bg-[var(--warn)] hover:brightness-110 text-[var(--black)] text-base font-bold uppercase rounded-lg shadow-lg transition-all">
+      Confirm Reset
+    </button>
+  </div>
+</template>
+
+<!-- MODAL: MIN SELECTOR TEMPLATE -->
+<template id="tpl-modal-min">
+  <div class="p-4 space-y-4">
+    <div class="bg-[var(--primary)]/5 border border-[var(--primary)]/10 rounded-lg p-3 mb-2">
+      <p class="text-[10px] text-[var(--white)]/50 leading-relaxed">
+        <span class="text-[var(--primary)] font-bold">Auto-Force:</span>
+        Value &lt; 1 = skip checkBonus, claim directly (FASTEST).<br>
+        Value &ge; 1 = checkBonus first, compare threshold.
+      </p>
+    </div>
+    <div id="min-class-list" class="space-y-3"></div>
+  </div>
+</template>
+
+<!-- MODAL: UPGRADE TEMPLATE -->
+<template id="tpl-modal-upgrade">
+  <div class="space-y-4">
+    <div class="bg-[var(--warn)]/10 border border-[var(--warn)]/20 p-4 rounded-xl text-center">
+      <p class="text-[10px] text-[var(--warn)] uppercase tracking-[0.2em] mb-1">New Version Detected</p>
+      <div class="flex items-center justify-center gap-3 text-[var(--white)]">
+        <span class="text-[var(--white)]/40 font-mono text-xs" data-field="old-ver"></span>
+        <span class="text-[var(--warn)]"><i class="fa-solid fa-arrow-right"></i></span>
+        <span class="font-mono text-lg font-bold" data-field="new-ver"></span>
+      </div>
+    </div>
+    <p class="text-xs text-[var(--white)]/50 leading-relaxed text-center px-2">
+      A new core update is ready. Click below to open the Tampermonkey installation page.
+    </p>
+    <div class="flex gap-2">
+      <button id="upgrade-confirm" class="flex-1 py-3 bg-[var(--warn)] hover:brightness-125 text-[var(--black)] text-sm font-bold uppercase rounded-lg transition-all shadow-lg">
+        <i class="fa-solid fa-download"></i> Update Now
+      </button>
+      <button id="upgrade-reload" class="px-4 py-3 bg-[var(--white)]/5 hover:bg-[var(--white)]/10 text-[var(--white)]/60 text-sm rounded-lg transition-all">
+        Restart
+      </button>
+    </div>
+  </div>
+</template>
+
+<!-- MODAL: CLOUDFLARE TEMPLATE -->
+<template id="tpl-modal-cf">
+  <div class="p-4 space-y-4">
+    <div class="flex items-center gap-3 bg-[var(--warn)]/10 p-3 rounded-lg border border-[var(--warn)]/20">
+      <div class="p-2 bg-[var(--warn)]/20 rounded-md">
+        <i class="fa-solid fa-shield"></i>
+      </div>
+      <div>
+        <p class="text-xs text-[var(--white)] font-bold uppercase tracking-wider">Cloudflare Active</p>
+        <p class="text-[10px] text-[var(--white)]/60">Please complete the challenge to sync your session.</p>
+      </div>
+    </div>
+    <div class="relative w-full h-[380px] bg-white rounded-xl overflow-hidden border border-[var(--primary)]/20 shadow-inner">
+      <iframe id="cf-iframe" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+      <div id="cf-loader" class="absolute inset-0 bg-[var(--black)] flex flex-col items-center justify-center gap-3">
+        <div class="w-6 h-6 border-2 border-[var(--primary)] border-t-transparent animate-spin rounded-full"></div>
+        <p class="text-[10px] text-[var(--primary)] font-bold uppercase tracking-[0.2em]">Bypassing Guard...</p>
+      </div>
+    </div>
+    <div class="bg-[var(--third)]/20 p-2 rounded border border-[var(--white)]/5">
+      <p class="text-[9px] text-[var(--white)]/40 text-center uppercase leading-tight">
+        The page will automatically reload once verification is <span class="text-[var(--success)]">Successful</span>.
+      </p>
+    </div>
+  </div>
+</template>
+
+<!-- MODAL: HISTORY TEMPLATE -->
+<template id="tpl-modal-history">
+  <div data-field="summary-box"></div>
+  <div class="mb-4 flex justify-between items-center border-b border-[var(--white)]/5 pb-3">
+    <div class="flex flex-col">
+      <span class="text-[9px] text-[var(--white)]/30 uppercase font-bold tracking-widest">Total Entry</span>
+      <span id="tab-count-display" class="text-[10px] text-[var(--primary)] font-mono">0 Items [25 Limit]</span>
+    </div>
+    <div class="flex bg-[var(--black)]/20 p-1 rounded-lg border border-[var(--white)]/5">
+      <button class="tab-btn active px-3 py-1 text-[10px] font-bold uppercase rounded-md transition-all" data-tab="drop">Drop</button>
+      <button class="tab-btn px-3 py-1 text-[10px] font-bold uppercase rounded-md transition-all opacity-40 hover:opacity-100" data-tab="bonus">Bonus</button>
+      <button class="tab-btn px-3 py-1 text-[10px] font-bold uppercase rounded-md transition-all opacity-40 hover:opacity-100" data-tab="reload">Reload</button>
+    </div>
+  </div>
+  <div id="history-items-container" class="max-h-[350px] overflow-y-auto pr-1 custom-scrollbar"></div>
+</template>
